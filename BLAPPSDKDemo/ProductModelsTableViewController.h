@@ -20,12 +20,26 @@
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic, assign) NSInteger modelId;
 @property(nonatomic, assign) NSInteger brandId;
+@property(nonatomic, assign) NSInteger devtype;
 @end
 
+@interface downloadInfo : NSObject
+
+@property(nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *downloadUrl;
+@property (nonatomic, strong) NSString *randkey;
+@property (nonatomic, strong) NSString *savePath;
+@property(nonatomic, assign) NSInteger brandId;
+@property(nonatomic, assign) NSInteger devtype;
+@end
 
 @class CateGory;
 @interface ProductModelsTableViewController : UITableViewController
 @property(nonatomic, strong) Model *model;
+@property(nonatomic, strong) downloadInfo *downloadinfo;
 @property(nonatomic, strong) CateGory *cateGory;
 @property(nonatomic, assign) NSInteger devtype;
+@property (nonatomic, strong) NSString *downloadUrl;
+@property (nonatomic, strong) NSString *randkey;
+@property (nonatomic, strong) NSString *savePath;
 @end

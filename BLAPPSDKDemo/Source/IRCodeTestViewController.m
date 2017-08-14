@@ -83,17 +83,20 @@
     
     switch (indexPath.row) {
         case 0:
-            
+//            [self queryDeviceVersionWithTypeId:BL_IRCODE_DEVICE_TV brandId:5];
+            [self queryIRCodeDownloadUrlWithTypeId:BL_IRCODE_DEVICE_TV brandId:5 versionId:0];
             break;
         case 1:
             _devtype = BL_IRCODE_DEVICE_AC;
             [self performSegueWithIdentifier:@"CateGoriesTableView" sender:nil];
             break;
         case 2:
-            [self querySubAreaLocateid];
+            _devtype = BL_IRCODE_DEVICE_TV;
+            [self performSegueWithIdentifier:@"CateGoriesTableView" sender:nil];
             break;
         case 3:
-            [self querySTBProvider];
+            _devtype = BL_IRCODE_DEVICE_TV_BOX;
+            [self performSegueWithIdentifier:@"CateGoriesTableView" sender:nil];
             break;
         default:
             break;

@@ -10,9 +10,6 @@
 #import "ProductModelsTableViewController.h"
 @class Model;
 @interface ControlViewController : UIViewController
-@property (nonatomic, strong) NSString *downloadUrl;
 @property (nonatomic, strong) NSString *randkey;
 @property (nonatomic, strong) NSString *savePath;
-@property (nonatomic, strong) Model *model;
-@property(nonatomic, assign) NSInteger devtype;
 @end

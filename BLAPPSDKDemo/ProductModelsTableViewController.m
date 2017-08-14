@@ -43,6 +43,20 @@
 
 @end
 
+@implementation downloadInfo
+
+- (instancetype)initWithDic: (NSDictionary *)dic {
+    self = [super init];
+    if (self) {
+        _downloadUrl = dic[@"downloadurl"];
+        _name = dic[@"name"];
+        _randkey = dic[@"randkey"];
+    }
+    return self;
+}
+
+@end
+
 @interface ProductModelsTableViewController ()
 @property (nonatomic, strong) BLController *blcontroller;
 @property(nonatomic, strong) NSArray *modelsArray;
@@ -55,7 +69,12 @@
     _modelsArray = [NSArray array];
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     self.blcontroller = delegate.let.controller;
-    [self queryDeviceVersionWithTypeId:_devtype brandId:_cateGory.brandid];
+    if (_devtype == BL_IRCODE_DEVICE_AC) {
+        [self queryDeviceVersionWithTypeId:_devtype brandId:_cateGory.brandid];
+    }else if (_devtype == BL_IRCODE_DEVICE_TV){
+        [self queryIRCodeDownloadUrlWithTypeId:_devtype brandId:_cateGory.brandid versionId:0];
+    }
+    
 }
 
 - (void)queryDeviceVersionWithTypeId:(NSInteger)typeId brandId:(NSInteger)brandId {
@@ -79,8 +98,28 @@
 
         }
     }];
-    
-    
+}
+
+- (void)queryIRCodeDownloadUrlWithTypeId:(NSInteger)typeId brandId:(NSInteger)brandId versionId:(NSInteger)versionId {
+    [self.blcontroller requestIRCodeScriptDownloadUrlWithType:typeId brand:brandId version:versionId completionHandler:^(BLBaseBodyResult * _Nonnull result) {
+        NSLog(@"statue:%ld msg:%@", (long)result.error, result.msg);
+        if ([result succeed]) {
+            NSLog(@"response:%@", result.responseBody);
+            if (result.responseBody) {
+                
+                NSData *responseData = [result.responseBody dataUsingEncoding:NSUTF8StringEncoding];
+                NSDictionary *responseDic = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil];
+                
+                NSMutableArray *array = [NSMutableArray new];
+                for (NSDictionary *pdic in responseDic[@"downloadinfo"]) {
+                    downloadInfo *model = [[downloadInfo alloc] initWithDic:pdic];
+                    [array addObject: model];
+                }
+                _modelsArray = array;
+                [self.tableView reloadData];
+            }
+        }
+    }];
 }
 
 #pragma mark - Table view data source
@@ -95,16 +134,33 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
-    _model = _modelsArray[indexPath.row];
-    cell.textLabel.text = _model.name;
-    cell.detailTextLabel.text = @"Tap to download";
+    if (_devtype == BL_IRCODE_DEVICE_AC) {
+        _model = _modelsArray[indexPath.row];
+        cell.textLabel.text = _model.name;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld",(long)_model.modelId];
+    }else if (_devtype == BL_IRCODE_DEVICE_TV){
+        _downloadinfo = _modelsArray[indexPath.row];
+        cell.textLabel.text = _downloadinfo.name;
+        cell.detailTextLabel.text = _downloadinfo.downloadUrl;
+    }
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Model *model = _modelsArray[indexPath.row];
-    model.brandId = _cateGory.brandid;
-    [self performSegueWithIdentifier:@"RecoginzeIRCodeView" sender:model];
+    if (_devtype == BL_IRCODE_DEVICE_AC) {
+        Model *model = _modelsArray[indexPath.row];
+        model.brandId = _cateGory.brandid;
+        model.devtype = _devtype;
+        [self performSegueWithIdentifier:@"RecoginzeIRCodeView" sender:model];
+    }else if (_devtype == BL_IRCODE_DEVICE_TV){
+        downloadInfo *downloadinfo = _modelsArray[indexPath.row];
+        downloadinfo.brandId = _cateGory.brandid;
+        downloadinfo.devtype = _devtype;
+        [self performSegueWithIdentifier:@"RecoginzeIRCodeView" sender:downloadinfo];
+    }
+    
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -112,7 +168,12 @@
         UIViewController *target = segue.destinationViewController;
         if ([target isKindOfClass:[RecoginzeIRCodeViewController class]]) {
             RecoginzeIRCodeViewController* opVC = (RecoginzeIRCodeViewController *)target;
-            opVC.model = (Model *)sender;
+            if (_devtype == BL_IRCODE_DEVICE_AC) {
+                opVC.model = (Model *)sender;
+            }else if (_devtype == BL_IRCODE_DEVICE_TV){
+                opVC.downloadinfo = (downloadInfo *)sender;
+            }
+            
         }
     }
 }

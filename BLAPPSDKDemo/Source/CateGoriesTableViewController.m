@@ -49,25 +49,29 @@
 }
 
 - (void)queryDeviceTypes {
-    NSLog(@"%ld",(long)_devtype);
-    [self.blcontroller requestIRCodeDeviceBrandsWithType:_devtype completionHandler:^(BLBaseBodyResult * _Nonnull result) {
-        NSLog(@"statue:%ld msg:%@", (long)result.error, result.msg);
-        if ([result succeed]) {
-            NSLog(@"response:%@", result.responseBody);
-            NSData *jsonData = [result.responseBody dataUsingEncoding:NSUTF8StringEncoding];
-            NSError *err;
-            NSDictionary *responseBodydic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                                            options:NSJSONReadingMutableContainers
-                                                                              error:&err];
-            NSMutableArray *array = [NSMutableArray new];
-            for (NSDictionary *dic in responseBodydic[@"brand"]) {
-                [array addObject: [[CateGory alloc] initWithDic: dic]];
+    if (_devtype == BL_IRCODE_DEVICE_AC || _devtype == BL_IRCODE_DEVICE_TV) {
+        [self.blcontroller requestIRCodeDeviceBrandsWithType:_devtype completionHandler:^(BLBaseBodyResult * _Nonnull result) {
+            NSLog(@"statue:%ld msg:%@", (long)result.error, result.msg);
+            if ([result succeed]) {
+                NSLog(@"response:%@", result.responseBody);
+                NSData *jsonData = [result.responseBody dataUsingEncoding:NSUTF8StringEncoding];
+                NSError *err;
+                NSDictionary *responseBodydic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                                options:NSJSONReadingMutableContainers
+                                                                                  error:&err];
+                NSMutableArray *array = [NSMutableArray new];
+                for (NSDictionary *dic in responseBodydic[@"brand"]) {
+                    [array addObject: [[CateGory alloc] initWithDic:dic]];
+                }
+                _categories = array;
+                [self.tableView reloadData];
+                
             }
-            _categories = array;
-            [self.tableView reloadData];
-            
-        }
-    }];
+        }];
+    }else if(_devtype == BL_IRCODE_DEVICE_TV_BOX){
+        
+    }
+
 }
 
 #pragma mark - Table view data source
