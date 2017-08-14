@@ -9,7 +9,7 @@
 
 #import "ProductModelsTableViewController.h"
 #import "AppDelegate.h"
-#import "ControlViewController.h"
+#import "RecoginzeIRCodeViewController.h"
 
 @interface Brand ()
 @property(nonatomic, readwrite, assign) NSInteger cateGoryId;
@@ -104,14 +104,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Model *model = _modelsArray[indexPath.row];
     model.brandId = _cateGory.brandid;
-    [self performSegueWithIdentifier:@"controllerView" sender:model];
+    [self performSegueWithIdentifier:@"RecoginzeIRCodeView" sender:model];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"controllerView"]) {
+    if ([segue.identifier isEqualToString:@"RecoginzeIRCodeView"]) {
         UIViewController *target = segue.destinationViewController;
-        if ([target isKindOfClass:[ControlViewController class]]) {
-            ControlViewController* opVC = (ControlViewController *)target;
+        if ([target isKindOfClass:[RecoginzeIRCodeViewController class]]) {
+            RecoginzeIRCodeViewController* opVC = (RecoginzeIRCodeViewController *)target;
             opVC.model = (Model *)sender;
         }
     }

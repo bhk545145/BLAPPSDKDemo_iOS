@@ -1868,11 +1868,11 @@
                                 <rect key="frame" x="0.0" y="55" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yLS-Q3-THM" id="B7d-AV-lSm">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XJX-bw-ykE">
-                                            <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -1930,14 +1930,14 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Select Product Models" id="Nws-ah-8Al"/>
                     <connections>
-                        <segue destination="ZEv-H3-SwH" kind="push" identifier="ProductModelsView" id="T9H-T1-OFj"/>
+                        <segue destination="ZEv-H3-SwH" kind="push" identifier="RecoginzeIRCodeView" id="T9H-T1-OFj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aGQ-xr-lSL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4890" y="2072"/>
         </scene>
-        <!--RecoginzeIR Code View Controller-->
+        <!--Recoginze IRCode View-->
         <scene sceneID="22a-S4-zoE">
             <objects>
                 <viewController id="ZEv-H3-SwH" customClass="RecoginzeIRCodeViewController" sceneMemberID="viewController">
@@ -1997,7 +1997,7 @@
                             <constraint firstItem="UBz-VQ-RxA" firstAttribute="leading" secondItem="VG3-gs-n3C" secondAttribute="leadingMargin" constant="62" id="zpa-7W-ZFh"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="IWh-dH-a6t"/>
+                    <navigationItem key="navigationItem" title="Recoginze IRCode View" id="IWh-dH-a6t"/>
                     <connections>
                         <outlet property="ResultTxt" destination="vd0-B3-vvZ" id="fvi-OB-Bwr"/>
                         <segue destination="yPk-cQ-dOd" kind="push" identifier="controllerView" id="g4G-6j-sfv"/>

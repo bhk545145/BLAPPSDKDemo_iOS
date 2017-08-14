@@ -69,11 +69,11 @@ int tag = 0;
 
 
 - (void)queryIRCodeScriptInfo {
-//    BLIRCodeInfoResult *result = [self.blcontroller queryIRCodeInfomationWithScript:self.savePath randkey:nil deviceType:_brand.cateGoryId];
-//    NSLog(@"statue:%ld msg:%@", (long)result.error, result.msg);
-//    if ([result succeed]) {
-//        NSLog(@"info:%@", result.infomation);
-//    }
+    BLIRCodeInfoResult *result = [self.blcontroller queryIRCodeInfomationWithScript:self.savePath randkey:nil deviceType:BL_IRCODE_DEVICE_AC];
+    NSLog(@"statue:%ld msg:%@", (long)result.error, result.msg);
+    if ([result succeed]) {
+        NSLog(@"info:%@", result.infomation);
+    }
 }
 - (IBAction)queryACIRCodeData:(id)sender {
     BLQueryIRCodeParams *params = [[BLQueryIRCodeParams alloc] init];
