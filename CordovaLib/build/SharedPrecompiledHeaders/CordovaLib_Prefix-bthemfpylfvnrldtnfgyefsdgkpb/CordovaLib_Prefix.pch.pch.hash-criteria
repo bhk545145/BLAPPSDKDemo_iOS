@@ -1,0 +1,23 @@
+-x
+objective-c
+-arch
+arm64
+-std=c99
+-fobjc-arc
+-fmodules
+-fbuild-session-file=/var/folders/j2/dh26ndx56vzfq4wzbb9q2ydm0000gn/C/org.llvm.clang/ModuleCache/Session.modulevalidation
+-fpascal-strings
+-Os
+-isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk
+-miphoneos-version-min=7.0
+-g
+-fembed-bitcode-marker
+-iquote
+-iquote
+-I/Users/baihk/Documents/baihongkun/appsdk/demo/ios/BLAPPSDKDemo_iOS/CordovaLib/build/Release-iphoneos/include
+-F/Users/baihk/Documents/baihongkun/appsdk/demo/ios/BLAPPSDKDemo_iOS/CordovaLib/build/Release-iphoneos
+aarch64-apple-darwin16.7.0
+"4.2.1 Compatible Apple LLVM 8.1.0 (clang-802.0.42)"
+SDK_PRODUCT_BUILD_VERSION=14E8301
+14E8301
